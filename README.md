@@ -1,4 +1,4 @@
-# Windows-Starter
+# windows-dev-setup
 
 ## Phase 1 — Claude Code 부트스트랩 (PowerShell)
 
