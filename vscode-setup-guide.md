@@ -1,6 +1,6 @@
 # VSCode 셋업 가이드 — 윈도우 11
 
-맥 VSCode 가이드([../../outcome/vscode-setup-guide.md](../../outcome/vscode-setup-guide.md))를 윈도우 기준으로 적용한 버전.
+맥 VSCode 가이드를 윈도우 기준으로 적용한 버전.
 
 ---
 
@@ -32,7 +32,7 @@ code .           # 현재 폴더를 VSCode로 열기
   "markdown.preview.fontSize": 18,
   "window.zoomLevel": 0,
 
-  "files.autoSave": "afterDelay",
+  "files.autoSave": "afterDelay",  // 미저장 버퍼 방지 → git pull 후 탭에 옛 버전이 남지 않음
   "files.encoding": "utf8",
   "files.eol": "\n",
   "editor.tabSize": 4,
@@ -104,6 +104,14 @@ code --install-extension pkief.material-icon-theme
   { "key": "enter", "command": "explorer.openAndPassFocus", "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus && !explorerResourceIsFolder" },
   { "key": "enter", "command": "list.toggleExpand", "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus && explorerResourceIsFolder" },
   { "key": "enter", "command": "-renameFile", "when": "explorerViewletVisible && filesExplorerFocus && !inputFocus" },
+
+  // Ctrl+N → 탐색기에서 선택 위치에 새 파일 / Ctrl+Shift+N → 새 폴더 (탐색기 포커스일 때만)
+  // when으로 탐색기에 한정 — 에디터에선 기본 Ctrl+N(새 파일)·Ctrl+Shift+N(새 창) 그대로
+  { "key": "ctrl+n", "command": "explorer.newFile", "when": "explorerViewletFocus" },
+  { "key": "ctrl+shift+n", "command": "explorer.newFolder", "when": "explorerViewletFocus" },
+
+  // Ctrl+Alt+F12 → 선택 파일·폴더를 파일 탐색기에서 표시 (Reveal in File Explorer). 기본 단축키 없는 동작
+  { "key": "ctrl+alt+f12", "command": "revealFileInOS", "when": "explorerViewletFocus" },
 
   // Ctrl+Alt+Y → 파일 디스크에서 다시 읽기
   { "key": "ctrl+alt+y", "command": "workbench.action.files.revert" },

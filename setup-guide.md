@@ -144,7 +144,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions.git \
 ```bash
 mkdir -p ~/Documents/dev/workspace-pe
 cd ~/Documents/dev/workspace-pe
-git clone git@github.com:JuJin1324/Windows-Starter.git
+git clone git@github.com:JuJin1324/windows-dev-setup.git
 ```
 
 ---
@@ -154,7 +154,7 @@ git clone git@github.com:JuJin1324/Windows-Starter.git
 클론한 레포의 `.zshrc`를 홈 디렉터리에 복사한다.
 
 ```bash
-cp ~/Documents/dev/workspace-pe/Windows-Starter/.zshrc ~/.zshrc
+cp ~/Documents/dev/workspace-pe/windows-dev-setup/.zshrc ~/.zshrc
 source ~/.zshrc
 ```
 
