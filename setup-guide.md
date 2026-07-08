@@ -1,6 +1,6 @@
 # 윈도우 11 환경 셋업 가이드
 
-Git Bash + zsh 기반 터미널 환경을 구성하고(1~9), 이어서 OS 성능 설정을 적용한다(10~12).
+Git Bash + zsh 기반 터미널 환경을 구성하고(1~9), OS 성능 설정을 적용한(10~12) 뒤, 마지막으로 개발자용·시계 설정을 손본다(13~14).
 
 ---
 
@@ -209,3 +209,46 @@ powercfg /h off
 - **시작 프로그램**: 작업 관리자(Ctrl+Shift+Esc) → 시작 프로그램 앱 → 안 쓰는 항목 사용 안 함. (Docker Desktop·각종 업데이터·OneDrive 등)
 - **백그라운드 앱 권한**: 설정 → 앱 → 설치된 앱 → 개별 앱 ⋯ → 고급 옵션 → 백그라운드 앱 권한을 **안 함**으로. (Win11 Home은 그룹 정책이 없어 앱별로 처리)
 - **OneDrive**: 동기화를 쓰지 않으면 종료·제거. 상시 인덱싱·업로드로 디스크·CPU를 먹는다.
+
+---
+
+## 13. 개발자용 설정 (설정 → 시스템 → 개발자용)
+
+설정(`Win+I`) → **시스템** → **개발자용**에서 아래 두 항목을 적용한다.
+
+### 13-1. 기본 터미널 앱 → Windows 터미널 고정
+
+콘솔 앱(cmd·PowerShell·Git Bash 등)을 실행할 때 항상 Windows 터미널 창에서 열리도록 기본 호스트를 고정한다.
+
+**터미널** 항목의 드롭다운을 **Windows 터미널**로 선택.
+
+> 대안: Windows 터미널 → 설정(`Ctrl+,`) → **시작** → **기본 터미널 응용 프로그램**을 `Windows 터미널`로 지정해도 동일하다.
+
+### 13-2. sudo 사용 허용
+
+Windows에서도 관리자 권한 명령을 `sudo <명령>` 형태로 인라인 실행할 수 있게 한다. (Windows 11 24H2 이상 지원)
+
+**sudo 사용** 토글을 **켬**으로 바꾼다. 켠 뒤 동작 방식은 **인라인**(현재 창에서 실행)을 권장한다.
+
+> 대안: 관리자 권한 PowerShell에서 아래로 인라인 모드를 켤 수 있다.
+>
+> ```powershell
+> sudo config --enable normal
+> ```
+>
+> 값은 `normal`(인라인) · `forceNewWindow`(새 창) · `disableInput`(입력 차단) 중 선택.
+
+---
+
+## 14. 작업 표시줄 시계에 초 표시
+
+시스템 트레이 시계를 `시:분:초`까지 표시한다. (개발자용이 아닌 **개인 설정**에 있다.)
+
+설정(`Win+I`) → **개인 설정** → **작업 표시줄** → **작업 표시줄 동작**에서 **시스템 트레이 시계에 초 표시(전원 사용량 증가)** 를 체크한다.
+
+> 대안: PowerShell에서 레지스트리로 켠 뒤 탐색기를 재시작한다.
+>
+> ```powershell
+> Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name ShowSecondsInSystemClock -Value 1
+> Stop-Process -Name explorer -Force
+> ```
