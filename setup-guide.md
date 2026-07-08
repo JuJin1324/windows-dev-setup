@@ -1,6 +1,6 @@
 # 윈도우 11 환경 셋업 가이드
 
-Git Bash + zsh 기반 터미널 환경을 구성하고(1~9), 이어서 OS 성능 설정을 적용한다(10~12).
+Git Bash + zsh 기반 터미널 환경을 구성하고(1~9), OS 성능 설정을 적용한(10~12) 뒤, 마지막으로 개발자용 설정과 시계 표시 형식을 손본다(13~14).
 
 ---
 
@@ -209,3 +209,71 @@ powercfg /h off
 - **시작 프로그램**: 작업 관리자(Ctrl+Shift+Esc) → 시작 프로그램 앱 → 안 쓰는 항목 사용 안 함. (Docker Desktop·각종 업데이터·OneDrive 등)
 - **백그라운드 앱 권한**: 설정 → 앱 → 설치된 앱 → 개별 앱 ⋯ → 고급 옵션 → 백그라운드 앱 권한을 **안 함**으로. (Win11 Home은 그룹 정책이 없어 앱별로 처리)
 - **OneDrive**: 동기화를 쓰지 않으면 종료·제거. 상시 인덱싱·업로드로 디스크·CPU를 먹는다.
+
+---
+
+## 13. 개발자용 설정 (설정 → 시스템 → 개발자용)
+
+설정(`Win+I`) → **시스템** → **개발자용**에서 아래 두 항목을 적용한다.
+
+### 13-1. 기본 터미널 앱 → Windows 터미널 고정
+
+콘솔 앱(cmd·PowerShell·Git Bash 등)을 실행할 때 항상 Windows 터미널 창에서 열리도록 기본 호스트를 고정한다.
+
+**터미널** 항목의 드롭다운을 **Windows 터미널**로 선택.
+
+> 대안: Windows 터미널 → 설정(`Ctrl+,`) → **시작** → **기본 터미널 응용 프로그램**을 `Windows 터미널`로 지정해도 동일하다.
+
+### 13-2. sudo 사용 허용
+
+Windows에서도 관리자 권한 명령을 `sudo <명령>` 형태로 인라인 실행할 수 있게 한다. (Windows 11 24H2 이상 지원)
+
+**sudo 사용** 토글을 **켬**으로 바꾼다. 켠 뒤 동작 방식은 **인라인**(현재 창에서 실행)을 권장한다.
+
+> 대안: 관리자 권한 PowerShell에서 아래로 인라인 모드를 켤 수 있다.
+>
+> ```powershell
+> sudo config --enable normal
+> ```
+>
+> 값은 `normal`(인라인) · `forceNewWindow`(새 창) · `disableInput`(입력 차단) 중 선택.
+
+---
+
+## 14. 작업 표시줄 시계 표시 형식
+
+시스템 트레이 시계를 `2026-07-08 (수) 14:30:05`처럼 **날짜 · 요일 · 24시간제 · 초**까지 표시한다.
+
+초 표시만 개인 설정에 있고, 24시간제와 요일은 시계에 그대로 노출되는 **지역 형식(간단한 시간/간단한 날짜)** 을 바꿔서 처리한다.
+
+### 14-1. 초 표시
+
+설정(`Win+I`) → **개인 설정** → **작업 표시줄** → **작업 표시줄 동작**에서 **시스템 트레이 시계에 초 표시(전원 사용량 증가)** 를 체크한다.
+
+> 대안: PowerShell에서 레지스트리로 켠 뒤 탐색기를 재시작한다.
+>
+> ```powershell
+> Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name ShowSecondsInSystemClock -Value 1
+> Stop-Process -Name explorer -Force
+> ```
+
+### 14-2. 24시간제 · 요일 표시
+
+작업 표시줄 시계는 지역 형식의 **간단한 시간**(시:분)과 **간단한 날짜**(요일·날짜)를 그대로 사용한다. 이 두 서식을 고쳐 24시간제와 요일을 표시한다.
+
+제어판 → **국가 또는 지역**(`intl.cpl`) → **형식** 탭 → **추가 설정...** 에서:
+
+| 탭 | 항목 | 값 | 결과 |
+|---|---|---|---|
+| 시간 | 간단한 시간 | `HH:mm` | 24시간제 (초 표시가 켜져 있으면 `HH:mm:ss`) |
+| 날짜 | 간단한 날짜 | `yyyy-MM-dd (ddd)` | 날짜 + 요일 (`2026-07-08 (수)`) |
+
+> `ddd`는 요일 약칭(수), `dddd`는 전체(수요일). 괄호 등은 리터럴로 그대로 출력된다.
+
+> 대안: PowerShell에서 레지스트리로 서식을 바꾼 뒤 탐색기를 재시작한다.
+>
+> ```powershell
+> Set-ItemProperty "HKCU:\Control Panel\International" -Name sShortTime -Value "HH:mm"
+> Set-ItemProperty "HKCU:\Control Panel\International" -Name sShortDate -Value "yyyy-MM-dd (ddd)"
+> Stop-Process -Name explorer -Force
+> ```

@@ -17,6 +17,6 @@ keyboard-remap-guide는 독립적으로 언제든 실행 가능. setup-guide 완
 | 2 | [keyboard-remap-guide.md](keyboard-remap-guide.md) | Ctrl ↔ Win 키 스왑 + 트랙패드 탭 클릭 비활성화 |
 | 2 | [wsl-setup-guide.md](wsl-setup-guide.md) | WSL2 활성화 + 최적화 (Docker 설치 선행) |
 | 2 | [winget-guide.md](winget-guide.md) | CLI 도구·GUI 앱 설치 (언어 런타임 포함) |
-| 2 | [setup-guide.md](setup-guide.md) | Git Bash + zsh + Windows Terminal 설치 및 설정 + OS 성능 설정 |
+| 2 | [setup-guide.md](setup-guide.md) | Git Bash + zsh + Windows Terminal 설치 및 설정 + OS 성능 설정 + 개발자용·시계 설정 |
 | 3 | [git-setup-guide.md](git-setup-guide.md) | Git config + SSH 키 생성 및 GitHub 등록 |
 | 3 | [vscode-setup-guide.md](vscode-setup-guide.md) | VSCode 설치 및 설정 |
