@@ -242,7 +242,7 @@ Windows에서도 관리자 권한 명령을 `sudo <명령>` 형태로 인라인 
 
 ## 14. 작업 표시줄 시계 표시 형식
 
-시스템 트레이 시계를 `2026-07-08 수 14:30:05`처럼 **날짜 · 요일 · 24시간제 · 초**까지 표시한다.
+시스템 트레이 시계를 `2026-07-08 (수) 14:30:05`처럼 **날짜 · 요일 · 24시간제 · 초**까지 표시한다.
 
 초 표시만 개인 설정에 있고, 24시간제와 요일은 시계에 그대로 노출되는 **지역 형식(간단한 시간/간단한 날짜)** 을 바꿔서 처리한다.
 
@@ -266,14 +266,14 @@ Windows에서도 관리자 권한 명령을 `sudo <명령>` 형태로 인라인 
 | 탭 | 항목 | 값 | 결과 |
 |---|---|---|---|
 | 시간 | 간단한 시간 | `HH:mm` | 24시간제 (초 표시가 켜져 있으면 `HH:mm:ss`) |
-| 날짜 | 간단한 날짜 | `yyyy-MM-dd ddd` | 날짜 + 요일 (`2026-07-08 수`) |
+| 날짜 | 간단한 날짜 | `yyyy-MM-dd (ddd)` | 날짜 + 요일 (`2026-07-08 (수)`) |
 
-> `ddd`는 요일 약칭(수), `dddd`는 전체(수요일).
+> `ddd`는 요일 약칭(수), `dddd`는 전체(수요일). 괄호 등은 리터럴로 그대로 출력된다.
 
 > 대안: PowerShell에서 레지스트리로 서식을 바꾼 뒤 탐색기를 재시작한다.
 >
 > ```powershell
 > Set-ItemProperty "HKCU:\Control Panel\International" -Name sShortTime -Value "HH:mm"
-> Set-ItemProperty "HKCU:\Control Panel\International" -Name sShortDate -Value "yyyy-MM-dd ddd"
+> Set-ItemProperty "HKCU:\Control Panel\International" -Name sShortDate -Value "yyyy-MM-dd (ddd)"
 > Stop-Process -Name explorer -Force
 > ```
