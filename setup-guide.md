@@ -1,6 +1,6 @@
 # 윈도우 11 환경 셋업 가이드
 
-Git Bash + zsh 기반 터미널 환경을 구성하고(1~9), OS 성능 설정을 적용한(10~12) 뒤, 마지막으로 개발자용·시계 설정을 손본다(13~14).
+Git Bash + zsh 기반 터미널 환경을 구성하고(1~9), OS 성능 설정을 적용한(10~12) 뒤, 마지막으로 개발자용 설정과 시계 표시 형식을 손본다(13~14).
 
 ---
 
@@ -240,9 +240,13 @@ Windows에서도 관리자 권한 명령을 `sudo <명령>` 형태로 인라인 
 
 ---
 
-## 14. 작업 표시줄 시계에 초 표시
+## 14. 작업 표시줄 시계 표시 형식
 
-시스템 트레이 시계를 `시:분:초`까지 표시한다. (개발자용이 아닌 **개인 설정**에 있다.)
+시스템 트레이 시계를 `수 2026-07-08 14:30:05`처럼 **요일 · 24시간제 · 초**까지 표시한다.
+
+초 표시만 개인 설정에 있고, 24시간제와 요일은 시계에 그대로 노출되는 **지역 형식(간단한 시간/간단한 날짜)** 을 바꿔서 처리한다.
+
+### 14-1. 초 표시
 
 설정(`Win+I`) → **개인 설정** → **작업 표시줄** → **작업 표시줄 동작**에서 **시스템 트레이 시계에 초 표시(전원 사용량 증가)** 를 체크한다.
 
@@ -250,5 +254,26 @@ Windows에서도 관리자 권한 명령을 `sudo <명령>` 형태로 인라인 
 >
 > ```powershell
 > Set-ItemProperty "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name ShowSecondsInSystemClock -Value 1
+> Stop-Process -Name explorer -Force
+> ```
+
+### 14-2. 24시간제 · 요일 표시
+
+작업 표시줄 시계는 지역 형식의 **간단한 시간**(시:분)과 **간단한 날짜**(요일·날짜)를 그대로 사용한다. 이 두 서식을 고쳐 24시간제와 요일을 표시한다.
+
+제어판 → **국가 또는 지역**(`intl.cpl`) → **형식** 탭 → **추가 설정...** 에서:
+
+| 탭 | 항목 | 값 | 결과 |
+|---|---|---|---|
+| 시간 | 간단한 시간 | `HH:mm` | 24시간제 (초 표시가 켜져 있으면 `HH:mm:ss`) |
+| 날짜 | 간단한 날짜 | `ddd yyyy-MM-dd` | 요일 + 날짜 (`수 2026-07-08`) |
+
+> `ddd`는 요일 약칭(수), `dddd`는 전체(수요일). 날짜보다 뒤에 두려면 `yyyy-MM-dd ddd`로.
+
+> 대안: PowerShell에서 레지스트리로 서식을 바꾼 뒤 탐색기를 재시작한다.
+>
+> ```powershell
+> Set-ItemProperty "HKCU:\Control Panel\International" -Name sShortTime -Value "HH:mm"
+> Set-ItemProperty "HKCU:\Control Panel\International" -Name sShortDate -Value "ddd yyyy-MM-dd"
 > Stop-Process -Name explorer -Force
 > ```
