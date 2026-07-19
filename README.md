@@ -20,3 +20,4 @@ keyboard-remap-guide는 독립적으로 언제든 실행 가능. setup-guide 완
 | 2 | [setup-guide.md](setup-guide.md) | Git Bash + zsh + Windows Terminal 설치 및 설정 + OS 성능 설정 + 개발자용·시계 설정 |
 | 3 | [git-setup-guide.md](git-setup-guide.md) | Git config + SSH 키 생성 및 GitHub 등록 |
 | 3 | [vscode-setup-guide.md](vscode-setup-guide.md) | VSCode 설치 및 설정 |
+| 3 | [browser-memory-guide.md](browser-memory-guide.md) | Edge·Chrome 메모리 절약 설정 |
